@@ -13,6 +13,6 @@ class PrincipalController extends AbstractController
 	*/	
   public function index()
   {
-    return $this->render('principal.html.twig', ['mensagem' => 'Sucesso muleque']);
+    return $this->render('principal.html.twig', ['mensagem' => 'Página Inicial']);
   }
 }

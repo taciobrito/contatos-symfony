@@ -1,33 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contato index{% endblock %}
+{% block title %}
+	Contatos
+{% endblock %}
 
 {% block body %}
-    <h1>Contato index</h1>
+  <h2>Contatos</h2>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for contato in contatos %}
-            <tr>
-                <td>{{ contato.id }}</td>
-                <td>
-                    <a href="{{ path('contato_show', {'id': contato.id}) }}">show</a>
-                    <a href="{{ path('contato_edit', {'id': contato.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="2">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
+  <div class="row">
+    <table class="table table-striped table-hovered">
+    	<thead>
+    		<tr>
+    			<th>Nome</th>
+    			<th>E-mail</th>
+    			<th>Telefone</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		{% for contato in contatos %}
+  	  		<tr>
+  	  			<td>{{ contato['nome'] }}</td>
+  	  			<td>{{ contato['email'] }}</td>
+  	  			<td>{{ contato['telefone'] }}</td>
+  	  		</tr>
+  	  	{% endfor %}
+    	</tbody>
     </table>
-
-    <a href="{{ path('contato_new') }}">Create new</a>
+  </div>
 {% endblock %}

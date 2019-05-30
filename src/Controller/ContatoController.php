@@ -2,95 +2,42 @@
 
 namespace App\Controller;
 
-use App\Entity\Contato;
-use App\Form\ContatoType;
-use App\Repository\ContatoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/contato")
+ * @Route("/contatos")
  */
 class ContatoController extends AbstractController
 {
     /**
-     * @Route("/", name="contato_index", methods={"GET"})
+     * @Route("/", name="contatos", methods={"GET"})
      */
-    public function index(ContatoRepository $contatoRepository): Response
+    public function index()
     {
         return $this->render('contato/index.html.twig', [
-            'contatos' => $contatoRepository->findAll(),
+            'contatos' => [
+                [
+                    'nome' => 'Tácio Teixeira',
+                    'email' => 'tacio.7brito@gmail.com',
+                    'telefone' => '61 99282-5546',
+                ],
+                [
+                    'nome' => 'Mozart Teixeira',
+                    'email' => 'mozartcomart@gmail.com',
+                    'telefone' => '61 92135-1116',
+                ],
+            ],
         ]);
     }
 
     /**
-     * @Route("/new", name="contato_new", methods={"GET","POST"})
+     * @Route("/create", name="contatos_create", methods={"GET"})
      */
-    public function new(Request $request): Response
+    public function create()
     {
-        $contato = new Contato();
-        $form = $this->createForm(ContatoType::class, $contato);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($contato);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('contato_index');
-        }
-
-        return $this->render('contato/new.html.twig', [
-            'contato' => $contato,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="contato_show", methods={"GET"})
-     */
-    public function show(Contato $contato): Response
-    {
-        return $this->render('contato/show.html.twig', [
-            'contato' => $contato,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="contato_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Contato $contato): Response
-    {
-        $form = $this->createForm(ContatoType::class, $contato);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('contato_index', [
-                'id' => $contato->getId(),
-            ]);
-        }
-
-        return $this->render('contato/edit.html.twig', [
-            'contato' => $contato,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="contato_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Contato $contato): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$contato->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($contato);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('contato_index');
+        return $this->render('contato/create.html.twig');
     }
 }
