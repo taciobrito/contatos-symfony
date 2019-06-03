@@ -29,7 +29,7 @@ app.constant('config', {
 
 	app.controller('salvaEnderecoController', function ($scope, $http, config) {
 		$scope.addEndereco = function (endereco) {
-			$http.post(`${config.appurl}enderecos/salvar`, endereco)
+			$http.post(`${config.appurl}enderecos/store`, endereco)
 				.then((res) => {
             if (res.status == 201) {
               alert('Endereço cadastrado!');

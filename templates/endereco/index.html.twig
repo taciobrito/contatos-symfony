@@ -24,12 +24,12 @@
 	  	<tbody>
 	  		{% for endereco in enderecos %}
 		  		<tr>
-		  			<td>{{ endereco['quadra'] }}</td>
-		  			<td>{{ endereco['numero'] }}</td>
-		  			<td>{{ endereco['observacao'] }}</td>
+		  			<td>{{ endereco.quadra }}</td>
+		  			<td>{{ endereco.numero }}</td>
+		  			<td>{{ endereco.observacao }}</td>
 		  			<td>
-	            <a href="#" class="btn btn-sm btn-primary">Editar</a>
-	            <a href="#" class="btn btn-sm btn-danger">Remover</a>
+	            <a href="/enderecos/{{'{{ endereco.id }}'}}/edit" class="btn btn-sm btn-primary">Editar</a>
+	            <a href="/enderecos/{{'{{ endereco.id }}'}}/destroy" onclick="return confirm('Confirma exclusão deste registro? Não poderá ser desfeito!')" class="btn btn-sm btn-danger">Remover</a>
 	          </td>
 		  		</tr>
 		  	{% endfor %}

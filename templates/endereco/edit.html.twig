@@ -1,29 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Criar Endereço
+	Editar Endereço
 {% endblock %}
 
 {% block body %}
-  <h2>Criar Endereço</h2>
+  <h2>Editar Endereço</h2>
 
   <div class="row">
     <a class="btn btn-primary" href="javascript:history.go(-1)">Voltar</a>
   </div>
 
-  <form ng-controller="salvaEnderecoController" ng-submit="addEndereco(endereco)">
+  <form action="/enderecos/{{ endereco.id }}/update" method="post">
     <div class="row">
     	<div class="col-6">
     		<div class="form-group">
     			<label for="quadra">Quadra</label>
-    			<input type="text" name="quadra" id="quadra" class="form-control" ng-model="endereco.quadra">
+    			<input type="text" name="quadra" id="quadra" class="form-control" value="{{ endereco.quadra }}">
     		</div>
     	</div>
 
     	<div class="col-6">
     		<div class="form-group">
     			<label for="numero">Número</label>
-    			<input type="text" name="numero" id="numero" class="form-control" ng-model="endereco.numero">
+    			<input type="text" name="numero" id="numero" class="form-control" value="{{ endereco.numero }}">
     		</div>
     	</div>
     </div>
@@ -32,7 +32,7 @@
     	<div class="col-12">
     		<div class="form-group">
     			<label for="observacao">Observação</label>
-    			<textarea name="observacao" id="observacao" class="form-control" ng-model="endereco.observacao"></textarea>
+    			<textarea name="observacao" id="observacao" class="form-control" value="{{ endereco.observacao }}"></textarea>
     		</div>
     	</div>
     </div>

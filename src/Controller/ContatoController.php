@@ -48,13 +48,22 @@ class ContatoController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $contato = new Contato();
-        $contato->setNome($request->get('nome'));
-        $contato->setEmail($request->get('email'));
-        $contato->setTelefone($request->get('telefone'));
+        $entityManager->getConnection()->beginTransaction();
+        try {
+            $contato = new Contato();
+            $contato->setNome($request->get('nome'));
+            $contato->setEmail($request->get('email'));
+            $contato->setTelefone($request->get('telefone'));
 
-        $entityManager->persist($contato);
-        $entityManager->flush();
+            $entityManager->persist($contato);
+            $entityManager->flush();
+
+            $entityManager->getConnection()->commit();
+        } catch (Exception $e) {
+            $entityManager->getConnection()->rollBack();
+            echo $e->getMessage();
+            exit;
+        }
 
         return $this->redirectToRoute('contatos');
     }
@@ -76,14 +85,23 @@ class ContatoController extends AbstractController
     public function update(Request $request, $id): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $contatos = $entityManager->getRepository(Contato::class);
-        $contato = $contatos->find($id);
         
-        $contato->setNome($request->get('nome'));
-        $contato->setEmail($request->get('email'));
-        $contato->setTelefone($request->get('telefone'));
+        $entityManager->getConnection()->beginTransaction(); // suspend auto-commit
+        try {
+            $contatos = $entityManager->getRepository(Contato::class);
+            $contato = $contatos->find($id);
+            
+            $contato->setNome($request->get('nome'));
+            $contato->setEmail($request->get('email'));
+            $contato->setTelefone($request->get('telefone'));
 
-        $entityManager->flush();
+            $entityManager->flush();
+            $entityManager->getConnection()->commit();
+        } catch (Exception $e) {
+            $entityManager->getConnection()->rollBack();
+            echo $e->getMessage();
+            exit;
+        }
 
         return $this->redirectToRoute('contatos');
     }
