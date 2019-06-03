@@ -7,19 +7,19 @@
 {% block body %}
   <h2>Criar Endereço</h2>
 
-  <form action="" method="post">
+  <form action="" method="post" ng-controller="salvaEnderecoController">
     <div class="row">
     	<div class="col-6">
     		<div class="form-group">
     			<label for="quadra">Quadra</label>
-    			<input type="text" name="quadra" id="quadra" class="form-control">
+    			<input type="text" name="quadra" id="quadra" class="form-control" ng-model="quadra">
     		</div>
     	</div>
 
     	<div class="col-6">
     		<div class="form-group">
     			<label for="numero">Número</label>
-    			<input type="text" name="numero" id="numero" class="form-control">		
+    			<input type="text" name="numero" id="numero" class="form-control" ng-model="numero">
     		</div>
     	</div>
     </div>
@@ -28,7 +28,7 @@
     	<div class="col-12">
     		<div class="form-group">
     			<label for="observacao">Observação</label>
-    			<textarea name="observacao" id="observacao" class="form-control"></textarea>
+    			<textarea name="observacao" id="observacao" class="form-control" ng-model="observacao"></textarea>
     		</div>
     	</div>
     </div>

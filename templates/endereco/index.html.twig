@@ -14,6 +14,7 @@
 	  			<th>Quadra</th>
 	  			<th>Número</th>
 	  			<th>Observação</th>
+	  			<th>Ações</th>
 	  		</tr>
 	  	</thead>
 	  	<tbody>
@@ -22,6 +23,10 @@
 		  			<td>{{ endereco['quadra'] }}</td>
 		  			<td>{{ endereco['numero'] }}</td>
 		  			<td>{{ endereco['observacao'] }}</td>
+		  			<td>
+	            <a href="#" class="btn btn-sm btn-primary">Editar</a>
+	            <a href="#" class="btn btn-sm btn-danger">Remover</a>
+	          </td>
 		  		</tr>
 		  	{% endfor %}
 	  	</tbody>
