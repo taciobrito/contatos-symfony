@@ -22,16 +22,6 @@ class ContatoRepository extends ServiceEntityRepository
     // /**
     //  * @return Contato[] Returns an array of Contato objects
     //  */
-    
-    public function all()
-    {
-        
-    }
-    
-
-    // /**
-    //  * @return Contato[] Returns an array of Contato objects
-    //  */
     /*
     public function findByExampleField($value)
     {

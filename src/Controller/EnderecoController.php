@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Endereco;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\EnderecoRepository;
 
 /**
  * @Route("/enderecos")
@@ -17,20 +20,9 @@ class EnderecoController extends AbstractController
      */
     public function index()
     {
-        return $this->render('endereco/index.html.twig', [
-            'enderecos' => [
-                [
-                    'quadra' => 'QR 315',
-                    'numero' => '25',
-                    'observacao' => 'Fica na Santa maria norte',
-                ],
-                [
-                    'quadra' => 'QR 313',
-                    'numero' => '20',
-                    'observacao' => 'Fica na santa maria norte',
-                ],
-            ],
-        ]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $enderecos = $entityManager->getRepository(Endereco::class);
+        return $this->render('endereco/index.html.twig', $enderecos->findAll());
     }
 
     /**

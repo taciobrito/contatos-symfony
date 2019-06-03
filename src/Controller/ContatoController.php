@@ -28,10 +28,9 @@ class ContatoController extends AbstractController
      */
     public function contatos()
     {
-        return $this->json(
-            $this->getDoctrine()
-                ->getRepository(Contato::class)
-                ->all(), 200);
+        $entityManager = $this->getDoctrine()->getManager();
+        $contatos = $entityManager->getRepository(Contato::class);
+        return $this->json($contatos->findAll(), 200);
     }
 
     /**
@@ -43,24 +42,64 @@ class ContatoController extends AbstractController
     }
 
     /**
-     * @Route("/product", name="contatos_store", methods={"POST"})
+     * @Route("/store", name="contatos_store", methods={"POST"})
      */
     public function store(Request $request): Response
     {
-        echo "<pre>";
-        print_r($request);
-        exit();
         $entityManager = $this->getDoctrine()->getManager();
 
         $contato = new Contato();
-        $contato->setNome();
-        // $contato->setPrice(1999);
-        // $contato->setDescription('Ergonomic and stylish!');
+        $contato->setNome($request->get('nome'));
+        $contato->setEmail($request->get('email'));
+        $contato->setTelefone($request->get('telefone'));
 
-        // tell Doctrine you want to (eventually) save the contato (no queries yet)
         $entityManager->persist($contato);
-
-        // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
+
+        return $this->redirectToRoute('contatos');
+    }
+
+    /**
+     * @Route("/{id}/edit", name="contatos_edit", methods={"GET"})
+     */
+    public function edit($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $contatos = $entityManager->getRepository(Contato::class);
+        $contato = $contatos->find($id);
+        return $this->render('contato/edit.html.twig', compact('contato'));
+    }
+
+    /**
+     * @Route("/{id}/update", name="contatos_update", methods={"POST"})
+     */
+    public function update(Request $request, $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $contatos = $entityManager->getRepository(Contato::class);
+        $contato = $contatos->find($id);
+        
+        $contato->setNome($request->get('nome'));
+        $contato->setEmail($request->get('email'));
+        $contato->setTelefone($request->get('telefone'));
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('contatos');
+    }
+
+    /**
+     * @Route("/{id}/destroy", name="contatos_destroy", methods={"GET"})
+     */
+    public function destroy($id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $contatos = $entityManager->getRepository(Contato::class);
+        $contato = $contatos->find($id);
+        
+        $entityManager->remove($contato);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('contatos');
     }
 }

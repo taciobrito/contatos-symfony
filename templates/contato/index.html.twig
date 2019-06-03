@@ -7,6 +7,10 @@
 {% block body %}
   <h2>Contatos</h2>
 
+  <div class="row">
+    <a class="btn btn-primary" href="/contatos/create">Criar</a>
+  </div>
+
   <div class="row" ng-controller="listaContatosController">
     <table class="table table-striped table-hovered">
     	<thead>
@@ -23,8 +27,8 @@
           <td>{{'{{ contato.email }}'}}</td>
           <td>{{'{{ contato.telefone }}'}}</td>
           <td>
-            <a href="#" class="btn btn-sm btn-primary">Editar</a>
-            <a href="#" class="btn btn-sm btn-danger">Remover</a>
+            <a href="/contatos/{{'{{ contato.id }}'}}/edit" class="btn btn-sm btn-primary">Editar</a>
+            <a href="/contatos/{{'{{ contato.id }}'}}/destroy" onclick="return confirm('Confirma exclusão deste registro? Não poderá ser desfeito!')" class="btn btn-sm btn-danger">Remover</a>
           </td>
         </tr>
     	</tbody>
